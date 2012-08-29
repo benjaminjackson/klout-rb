@@ -48,8 +48,10 @@ module Klout
     # usernames - The username or Array of usernames to look for.
     #
     # Returns an Array of user klout score objects.
-    def score(usernames)
-      get("/1/klout.json", :users => [usernames].flatten).users
+    def score(username)
+      user = get("/v2/identity.json/twitter", :screenName => username)
+      puts user.inspect
+      get("/v2/user.json/#{user["id"]}/score")
     end
 
     # Public: Retrieve users Klout profile for the given usernames.
